@@ -16,13 +16,6 @@ public class UserBasicDto {
 
     public UserBasicDto(){}
 
-    public UserBasicDto(String name, String password, String country, String address){
-        this.name = name;
-        this.password = password;
-        this.country = country;
-        this.address = address;
-    }
-
     public UserBasicDto(User user){
         this.id = user.getId();
         this.name = user.getName();
@@ -35,39 +28,20 @@ public class UserBasicDto {
         return this.id;
     }
 
-    public void setId(String id){
-        this.id = id;
-    }
-
     public String getName(){
         return this.name;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public String getPassword(){
         return this.password;
     }
 
-    public void setPassword(String password){
-        this.password = password;
-    }
     public String getCountry(){
         return this.country;
     }
 
-    public void setCountry(String country){
-        this.country = country;
-    }
-
     public String getAddress(){
         return this.address;
-    }
-
-    public void setAddress(String address){
-        this.address = address;
     }
 
     @Override
