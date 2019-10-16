@@ -4,10 +4,9 @@ import es.upm.miw.apaw_ep_themes.business_controllers.UserBusinessController;
 import es.upm.miw.apaw_ep_themes.dtos.UserBasicDto;
 import es.upm.miw.apaw_ep_themes.dtos.UserCreationDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(UserResource.USERS)
@@ -27,4 +26,8 @@ public class UserResource {
         return this.userBusinessController.create(userCreationDto);
     }
 
+    @GetMapping
+    public List<UserBasicDto> readAll() {
+        return this.userBusinessController.readAll();
+    }
 }
