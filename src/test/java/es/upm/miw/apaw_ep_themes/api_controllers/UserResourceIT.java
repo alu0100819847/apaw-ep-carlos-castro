@@ -21,6 +21,9 @@ class UserResourceIT {
     void testCreate() {
         UserBasicDto userBasicDto = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad");
         assertEquals("Carlos", userBasicDto.getName());
+        assertEquals("ccarlos", userBasicDto.getPassword());
+        assertEquals("Madrid", userBasicDto.getCountry());
+        assertEquals("Calle universidad", userBasicDto.getAddress());
     }
 
     @Test
