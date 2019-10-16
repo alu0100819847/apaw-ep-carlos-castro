@@ -6,7 +6,9 @@ import es.upm.miw.apaw_ep_themes.dtos.UserCreationDto;
 import es.upm.miw.apaw_ep_themes.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import sun.rmi.runtime.Log;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserBusinessController {
@@ -22,5 +24,10 @@ public class UserBusinessController {
         User user = new User(userCreationDto.getName(), userCreationDto.getPassword(), userCreationDto.getCountry(), userCreationDto.getAddress());
         this.userDao.save(user);
         return new UserBasicDto(user);
+    }
+
+    public List<UserBasicDto> readAll() {
+        List<User> suggestions = this.userDao.findAll();
+        return suggestions.stream().map(UserBasicDto::new).collect(Collectors.toList());
     }
 }
