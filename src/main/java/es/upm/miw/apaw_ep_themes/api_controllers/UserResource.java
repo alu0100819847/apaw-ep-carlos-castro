@@ -40,6 +40,11 @@ public class UserResource {
         return videoBasicDto;
     }
 
+    @GetMapping(value = ID_ID + CHANEL + VIDEOS)
+    public List<VideoBasicDto> readAllUsers(@PathVariable String id) {
+        return this.userBusinessController.readAllVideos(id);
+    }
+
     @PostMapping(value = ID_ID + CHANEL)
     public ChanelDto createChanel(@PathVariable String id, @RequestBody ChanelDto chanelDto) {
         chanelDto.validate();

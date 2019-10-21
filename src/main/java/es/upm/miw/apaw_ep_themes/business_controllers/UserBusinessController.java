@@ -35,8 +35,8 @@ public class UserBusinessController {
     }
 
     public List<UserBasicDto> readAllUsers() {
-        List<User> suggestions = this.userDao.findAll();
-        return suggestions.stream().map(UserBasicDto::new).collect(Collectors.toList());
+        List<User> users = this.userDao.findAll();
+        return users.stream().map(UserBasicDto::new).collect(Collectors.toList());
     }
 
     public VideoBasicDto createVideo(String id, VideoCreationDto videoCreationDto) {
@@ -60,5 +60,10 @@ public class UserBusinessController {
 
     private User findUserByIdAssured(String id) {
         return this.userDao.findById(id).orElseThrow(() -> new NotFoundException("User id: " + id));
+    }
+
+    public List<VideoBasicDto> readAllVideos(String id){
+        List<Video> videos = findUserByIdAssured(id).getChanel().getVideos();
+        return videos.stream().map(VideoBasicDto::new).collect(Collectors.toList());
     }
 }
