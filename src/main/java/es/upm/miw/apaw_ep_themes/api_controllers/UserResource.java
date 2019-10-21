@@ -57,4 +57,9 @@ public class UserResource {
         videoBasicDto.validate();
         this.userBusinessController.updateVideo(id, reference, videoBasicDto);
     }
+
+    @DeleteMapping(value = ID_ID + CHANEL + VIDEOS + REFERENCE)
+    public void deleteVideo(@PathVariable String id, @PathVariable String reference) {
+        this.userBusinessController.deleteVideo(id, reference);
+    }
 }
