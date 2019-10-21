@@ -77,4 +77,9 @@ public class UserBusinessController {
         video.setPublicVideo(videoBasicDto.getPublicVideo());
         videoDao.save(video);
     }
+
+    public void deleteVideo(String id, String reference) {
+        Video video = findVideoByReferenceAssured(reference);
+        this.videoDao.delete(video);
+    }
 }
