@@ -110,4 +110,27 @@ class UserResourceIT {
                 .returnResult().getResponseBody();
         return userBasicDto;
     }
+
+    @Test
+    void ReadAllVideos() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        VideoCreationDto videoCreationDto = new VideoCreationDto("Presentacion Carlos", true);
+        this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isOk();
+
+        List<VideoBasicDto> list =
+                this.webTestClient
+                        .get().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectBodyList(VideoBasicDto.class)
+                        .returnResult().getResponseBody();
+        assertTrue(list.size() > 0);
+        assertNotNull(list.get(0).getReference());
+        assertNotNull(list.get(0).getName());
+        assertNotNull(list.get(0).getPublicVideo());
+    }
 }
