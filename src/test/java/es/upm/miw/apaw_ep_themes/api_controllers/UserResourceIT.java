@@ -1,15 +1,8 @@
 package es.upm.miw.apaw_ep_themes.api_controllers;
 
 import es.upm.miw.apaw_ep_themes.ApiTestConfig;
-import es.upm.miw.apaw_ep_themes.daos.ChanelDao;
 import es.upm.miw.apaw_ep_themes.daos.UserDao;
-import es.upm.miw.apaw_ep_themes.daos.VideoDao;
 import es.upm.miw.apaw_ep_themes.dtos.*;
-import es.upm.miw.apaw_ep_themes.entities.Chanel;
-import es.upm.miw.apaw_ep_themes.entities.User;
-import es.upm.miw.apaw_ep_themes.exceptions.NotFoundException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,6 +75,18 @@ class UserResourceIT {
                 .body(BodyInserters.fromObject(videoCreationDto))
                 .exchange()
                 .expectStatus().isOk();
+
+    }
+
+    @Test
+    void testCreateVideoException() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        VideoCreationDto videoCreationDto = new VideoCreationDto(null, true);
+        this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
 
     }
 
