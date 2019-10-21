@@ -133,4 +133,24 @@ class UserResourceIT {
         assertNotNull(list.get(0).getName());
         assertNotNull(list.get(0).getPublicVideo());
     }
+
+    @Test
+    void testPutVideo() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        VideoCreationDto videoCreationDto = new VideoCreationDto("Presentacion Carlos", true);
+        String videoReference = this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(VideoBasicDto.class)
+                .returnResult().getResponseBody().getReference();
+
+        VideoBasicDto videoBasicDto = new VideoBasicDto("Presentacion Carlos 2", false);
+        this.webTestClient
+                .put().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS + UserResource.REFERENCE, userId, videoReference)
+                .body(BodyInserters.fromObject(videoBasicDto))
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

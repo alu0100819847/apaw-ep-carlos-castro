@@ -66,4 +66,15 @@ public class UserBusinessController {
         List<Video> videos = findUserByIdAssured(id).getChanel().getVideos();
         return videos.stream().map(VideoBasicDto::new).collect(Collectors.toList());
     }
+
+    private Video findVideoByReferenceAssured(String reference) {
+        return this.videoDao.findById(reference).orElseThrow(() -> new NotFoundException("User id: " + reference));
+    }
+
+    public void updateVideo(String id, String reference, VideoBasicDto videoBasicDto) {
+        Video video = findVideoByReferenceAssured(reference);
+        video.setName(videoBasicDto.getName());
+        video.setPublicVideo(videoBasicDto.getPublicVideo());
+        videoDao.save(video);
+    }
 }
