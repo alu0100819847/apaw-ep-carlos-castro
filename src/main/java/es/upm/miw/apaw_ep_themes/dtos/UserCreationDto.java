@@ -13,6 +13,8 @@ public class UserCreationDto {
 
     private String address;
 
+    private String chanelId;
+
     public UserCreationDto(){}
 
     public UserCreationDto(String name, String password, String country, String address){
@@ -20,6 +22,10 @@ public class UserCreationDto {
         this.password = password;
         this.country = country;
         this.address = address;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName(){
@@ -38,9 +44,17 @@ public class UserCreationDto {
         return this.address;
     }
 
+    public String getChanelId() {
+        return this.chanelId;
+    }
+
+    public void setChanelId(String chanelId){
+        this.chanelId = chanelId;
+    }
+
     public void validate() {
         if (this.name == null || this.password == null || this.name.isEmpty()|| this.password.isEmpty()  ) {
-            throw new BadRequestException("Incomplete UserBasicDto. ");
+            throw new BadRequestException("Incomplete UserCreationDto. ");
         }
     }
 

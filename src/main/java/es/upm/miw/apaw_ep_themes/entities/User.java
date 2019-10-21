@@ -47,6 +47,14 @@ public class User {
         return this.address;
     }
 
+    public Chanel getChanel(){
+        return this.chanel;
+    }
+
+    public void setChanel(Chanel chanel){
+        this.chanel = chanel;
+    }
+
     @Override
     public String toString(){
         return "User{" +
@@ -55,6 +63,7 @@ public class User {
                 ", password='" + this.password + '\'' +
                 ", country='" + this.country + '\'' +
                 ", address='" + this.address + '\'' +
+                ", chanel='" + this.chanel + '\'' +
                 '}';
     }
 }

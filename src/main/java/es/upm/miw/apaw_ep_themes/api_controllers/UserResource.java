@@ -1,8 +1,7 @@
 package es.upm.miw.apaw_ep_themes.api_controllers;
 
 import es.upm.miw.apaw_ep_themes.business_controllers.UserBusinessController;
-import es.upm.miw.apaw_ep_themes.dtos.UserBasicDto;
-import es.upm.miw.apaw_ep_themes.dtos.UserCreationDto;
+import es.upm.miw.apaw_ep_themes.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +11,9 @@ import java.util.List;
 @RequestMapping(UserResource.USERS)
 public class UserResource {
     public static final String USERS = "/users";
+    public static final String ID_ID = "/{id}";
+    public static final String VIDEOS = "/videos";
+    public static final String CHANEL = "/chanel";
 
     private UserBusinessController userBusinessController;
 
@@ -27,7 +29,20 @@ public class UserResource {
     }
 
     @GetMapping
-    public List<UserBasicDto> readAll() {
-        return this.userBusinessController.readAll();
+    public List<UserBasicDto> readAllUsers() {
+        return this.userBusinessController.readAllUsers();
+    }
+
+    @PostMapping(value = ID_ID + CHANEL + VIDEOS)
+    public VideoBasicDto createVideo(@PathVariable String id, @RequestBody VideoCreationDto videoCreationDto) {
+        videoCreationDto.validate();
+        VideoBasicDto videoBasicDto = this.userBusinessController.createVideo(id, videoCreationDto);
+        return videoBasicDto;
+    }
+
+    @PostMapping(value = ID_ID + CHANEL)
+    public ChanelDto createChanel(@PathVariable String id, @RequestBody ChanelDto chanelDto) {
+        chanelDto.validate();
+        return this.userBusinessController.createChanel(id, chanelDto);
     }
 }

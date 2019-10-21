@@ -20,10 +20,8 @@ public class Video {
         this.reaction = 0;
     }
 
-    public Video(String name){
-        this.name = name;
-        this.publicVideo = true;
-        this.reaction = 0;
+    public String getReference(){
+        return this.reference;
     }
 
     public String getName(){
@@ -41,7 +39,7 @@ public class Video {
     @Override
     public String toString() {
         return "Video{" +
-                "id='" + this.reference + '\'' +
+                "reference='" + this.reference + '\'' +
                 ", name=" + this.name +
                 ", reaction='" + this.reaction + '\'' +
                 '}';
