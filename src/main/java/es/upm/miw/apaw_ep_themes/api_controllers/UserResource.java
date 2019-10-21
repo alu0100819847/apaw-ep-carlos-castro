@@ -14,6 +14,7 @@ public class UserResource {
     public static final String ID_ID = "/{id}";
     public static final String VIDEOS = "/videos";
     public static final String CHANEL = "/chanel";
+    public static final String REFERENCE = "/{reference}";
 
     private UserBusinessController userBusinessController;
 
@@ -49,5 +50,11 @@ public class UserResource {
     public ChanelDto createChanel(@PathVariable String id, @RequestBody ChanelDto chanelDto) {
         chanelDto.validate();
         return this.userBusinessController.createChanel(id, chanelDto);
+    }
+
+    @PutMapping(value = ID_ID + CHANEL + VIDEOS + REFERENCE)
+    public void updateVideo(@PathVariable String id, @PathVariable String reference, @RequestBody VideoBasicDto videoBasicDto) {
+        videoBasicDto.validate();
+        this.userBusinessController.updateVideo(id, reference, videoBasicDto);
     }
 }

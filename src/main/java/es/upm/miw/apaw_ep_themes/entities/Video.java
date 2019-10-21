@@ -44,4 +44,12 @@ public class Video {
                 ", reaction='" + this.reaction + '\'' +
                 '}';
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPublicVideo(Boolean publicVideo) {
+        this.publicVideo = publicVideo;
+    }
 }
