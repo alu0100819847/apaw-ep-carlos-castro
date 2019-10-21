@@ -10,7 +10,7 @@ import java.util.List;
 public class Chanel {
 
     @Id
-    private int id;
+    private String id;
 
     private String name;
 
@@ -25,6 +25,10 @@ public class Chanel {
         this.description = description;
         this.topic = topic;
         this.videos = new ArrayList<>();
+    }
+
+    public String getId(){
+        return id;
     }
 
     public String getName(){
@@ -43,4 +47,13 @@ public class Chanel {
         return this.videos;
     }
 
+    @Override
+    public String toString(){
+        return "Chanel{" +
+                "id='" + this.id + '\'' +
+                ", name=" + this.name +
+                ", description='" + this.description + '\'' +
+                ", description='" + this.videos + '\'' +
+                '}';
+    }
 }

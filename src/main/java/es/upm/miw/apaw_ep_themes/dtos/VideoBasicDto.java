@@ -1,11 +1,10 @@
-package es.upm.miw.apaw_ep_themes.entities;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package es.upm.miw.apaw_ep_themes.dtos;
 
-@Document
-public class Video {
+import es.upm.miw.apaw_ep_themes.entities.Video;
+import es.upm.miw.apaw_ep_themes.exceptions.BadRequestException;
 
-    @Id
+public class VideoBasicDto {
+
     String reference;
 
     String name;
@@ -14,25 +13,24 @@ public class Video {
 
     Boolean publicVideo;
 
-    public Video(String name, Boolean publicVideo){
-        this.name = name;
-        this.publicVideo = publicVideo;
-        this.reaction = 0;
-    }
+    public VideoBasicDto(){ }
 
-    public Video(String name){
-        this.name = name;
-        this.publicVideo = true;
-        this.reaction = 0;
+    public VideoBasicDto(Video video){
+        this.reference = video.getReference();
+        this.name = video.getName();
+        this.publicVideo = video.getPublicVideo();
+        this.reaction = video.getReaction();
     }
 
     public String getReference(){
-        return reference;
+        return this.reference;
     }
 
     public String getName(){
         return this.name;
     }
+
+
 
     public Boolean getPublicVideo(){
         return this.publicVideo;
@@ -44,7 +42,7 @@ public class Video {
 
     @Override
     public String toString() {
-        return "Video{" +
+        return "VideoBasicDto{" +
                 "reference='" + this.reference + '\'' +
                 ", name=" + this.name +
                 ", reaction='" + this.reaction + '\'' +

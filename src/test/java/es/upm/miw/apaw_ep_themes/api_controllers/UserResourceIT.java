@@ -1,8 +1,15 @@
 package es.upm.miw.apaw_ep_themes.api_controllers;
 
 import es.upm.miw.apaw_ep_themes.ApiTestConfig;
-import es.upm.miw.apaw_ep_themes.dtos.UserBasicDto;
-import es.upm.miw.apaw_ep_themes.dtos.UserCreationDto;
+import es.upm.miw.apaw_ep_themes.daos.ChanelDao;
+import es.upm.miw.apaw_ep_themes.daos.UserDao;
+import es.upm.miw.apaw_ep_themes.daos.VideoDao;
+import es.upm.miw.apaw_ep_themes.dtos.*;
+import es.upm.miw.apaw_ep_themes.entities.Chanel;
+import es.upm.miw.apaw_ep_themes.entities.User;
+import es.upm.miw.apaw_ep_themes.exceptions.NotFoundException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +27,9 @@ class UserResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private UserDao userDao;
 
     @Test
     void testCreate() {
@@ -63,14 +73,36 @@ class UserResourceIT {
         assertNotNull(list.get(0).getPassword());
     }
 
+    @Test
+    void testCreateVideo() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        VideoCreationDto videoCreationDto = new VideoCreationDto("Presentacion Carlos", true);
+        this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isOk();
+
+    }
+
     UserBasicDto createUser(String name, String password, String country, String address) {
         UserCreationDto userCreationDto = new UserCreationDto(name, password, country, address);
-        return this.webTestClient
+        ChanelDto chanelDto = new ChanelDto("CarlosHD", "Canal de videos", "Informatica");
+        UserBasicDto userBasicDto = this.webTestClient
                 .post().uri(UserResource.USERS)
                 .body(BodyInserters.fromObject(userCreationDto))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(UserBasicDto.class)
                 .returnResult().getResponseBody();
+
+        this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL, userBasicDto.getId())
+                .body(BodyInserters.fromObject(chanelDto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ChanelDto.class)
+                .returnResult().getResponseBody();
+        return userBasicDto;
     }
 }
