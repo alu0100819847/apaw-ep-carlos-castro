@@ -62,4 +62,10 @@ public class UserResource {
     public void deleteVideo(@PathVariable String id, @PathVariable String reference) {
         this.userBusinessController.deleteVideo(id, reference);
     }
+
+    @PatchMapping(value = ID_ID)
+    public void patch(@PathVariable String id, @RequestBody UserPatchDto userPatchDto) {
+        userPatchDto.validate();
+        this.userBusinessController.patch(id, userPatchDto);
+    }
 }

@@ -7,6 +7,7 @@ import es.upm.miw.apaw_ep_themes.dtos.*;
 import es.upm.miw.apaw_ep_themes.entities.Chanel;
 import es.upm.miw.apaw_ep_themes.entities.User;
 import es.upm.miw.apaw_ep_themes.entities.Video;
+import es.upm.miw.apaw_ep_themes.exceptions.BadRequestException;
 import es.upm.miw.apaw_ep_themes.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -81,5 +82,21 @@ public class UserBusinessController {
     public void deleteVideo(String id, String reference) {
         Video video = findVideoByReferenceAssured(reference);
         this.videoDao.delete(video);
+    }
+
+    public void patch(String id, UserPatchDto userPatchDto) {
+        User user = this.findUserByIdAssured(id);
+        switch (userPatchDto.getPath()) {
+            case "address":
+                user.setAddress(userPatchDto.getNewValue());
+                break;
+            case "country":
+                user.setCountry(userPatchDto.getNewValue());
+                break;
+
+            default:
+                throw new BadRequestException("UserPatchDto is invalid");
+        }
+        this.userDao.save(user);
     }
 }

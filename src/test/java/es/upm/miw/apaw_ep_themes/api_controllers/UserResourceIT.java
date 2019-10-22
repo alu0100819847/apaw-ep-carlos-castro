@@ -171,4 +171,24 @@ class UserResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void testPatchUser() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        this.webTestClient
+                .patch().uri(UserResource.USERS + UserResource.ID_ID, userId)
+                .body(BodyInserters.fromObject(new UserPatchDto("country", "Irlanda")))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testPatchUserException() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        this.webTestClient
+                .patch().uri(UserResource.USERS + UserResource.ID_ID, userId)
+                .body(BodyInserters.fromObject(new UserPatchDto("", "Irlanda")))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 }

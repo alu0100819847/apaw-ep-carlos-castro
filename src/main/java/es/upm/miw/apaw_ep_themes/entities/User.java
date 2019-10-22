@@ -43,8 +43,16 @@ public class User {
         return this.country;
     }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public String getAddress(){
         return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Chanel getChanel(){
@@ -66,4 +74,6 @@ public class User {
                 ", chanel='" + this.chanel + '\'' +
                 '}';
     }
+
+
 }
