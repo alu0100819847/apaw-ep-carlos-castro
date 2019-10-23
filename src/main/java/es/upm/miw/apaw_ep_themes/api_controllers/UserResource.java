@@ -37,8 +37,7 @@ public class UserResource {
     @PostMapping(value = ID_ID + CHANEL + VIDEOS)
     public VideoBasicDto createVideo(@PathVariable String id, @RequestBody VideoCreationDto videoCreationDto) {
         videoCreationDto.validate();
-        VideoBasicDto videoBasicDto = this.userBusinessController.createVideo(id, videoCreationDto);
-        return videoBasicDto;
+        return this.userBusinessController.createVideo(id, videoCreationDto);
     }
 
     @GetMapping(value = ID_ID + CHANEL + VIDEOS)
@@ -53,14 +52,14 @@ public class UserResource {
     }
 
     @PutMapping(value = ID_ID + CHANEL + VIDEOS + REFERENCE)
-    public void updateVideo(@PathVariable String id, @PathVariable String reference, @RequestBody VideoBasicDto videoBasicDto) {
+    public void updateVideo(@PathVariable String reference, @RequestBody VideoBasicDto videoBasicDto) {
         videoBasicDto.validate();
-        this.userBusinessController.updateVideo(id, reference, videoBasicDto);
+        this.userBusinessController.updateVideo(reference, videoBasicDto);
     }
 
     @DeleteMapping(value = ID_ID + CHANEL + VIDEOS + REFERENCE)
-    public void deleteVideo(@PathVariable String id, @PathVariable String reference) {
-        this.userBusinessController.deleteVideo(id, reference);
+    public void deleteVideo(@PathVariable String reference) {
+        this.userBusinessController.deleteVideo(reference);
     }
 
     @PatchMapping(value = ID_ID)

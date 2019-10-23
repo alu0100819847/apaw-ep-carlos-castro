@@ -78,14 +78,14 @@ public class UserBusinessController {
         return this.videoDao.findById(reference).orElseThrow(() -> new NotFoundException("User id: " + reference));
     }
 
-    public void updateVideo(String id, String reference, VideoBasicDto videoBasicDto) {
+    public void updateVideo(String reference, VideoBasicDto videoBasicDto) {
         Video video = findVideoByReferenceAssured(reference);
         video.setName(videoBasicDto.getName());
         video.setPublicVideo(videoBasicDto.getPublicVideo());
         videoDao.save(video);
     }
 
-    public void deleteVideo(String id, String reference) {
+    public void deleteVideo(String reference) {
         Video video = findVideoByReferenceAssured(reference);
         this.videoDao.delete(video);
     }

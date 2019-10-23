@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_ep_themes.dtos;
 
-import es.upm.miw.apaw_ep_themes.entities.Chanel;
 import es.upm.miw.apaw_ep_themes.exceptions.BadRequestException;
 
 public class VideoCreationDto {
