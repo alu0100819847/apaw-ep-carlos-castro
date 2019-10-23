@@ -44,14 +44,6 @@ public class UserCreationDto {
         return this.address;
     }
 
-    public String getChanelId() {
-        return this.chanelId;
-    }
-
-    public void setChanelId(String chanelId){
-        this.chanelId = chanelId;
-    }
-
     public void validate() {
         if (this.name == null || this.password == null || this.name.isEmpty()|| this.password.isEmpty()  ) {
             throw new BadRequestException("Incomplete UserCreationDto. ");

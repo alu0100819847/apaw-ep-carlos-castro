@@ -40,12 +40,4 @@ public class Subscription {
         return this.chanel;
     }
 
-    public LocalDateTime getCreationDate(){
-        return this.creationDate;
-    }
-
-    public float getDonation(){
-        return this.donation;
-    }
-
 }
