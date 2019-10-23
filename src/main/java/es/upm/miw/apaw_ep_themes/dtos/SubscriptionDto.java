@@ -18,6 +18,7 @@ public class SubscriptionDto {
         this.id = subscription.getId();
         this.userId = subscription.getUser().getId();
         this.chanelId = subscription.getChanel().getId();
+        this.donation = subscription.getDonation();
     }
 
 
