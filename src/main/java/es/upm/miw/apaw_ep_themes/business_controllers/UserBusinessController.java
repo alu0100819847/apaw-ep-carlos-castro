@@ -11,6 +11,8 @@ import es.upm.miw.apaw_ep_themes.exceptions.BadRequestException;
 import es.upm.miw.apaw_ep_themes.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.EmitterProcessor;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,17 +23,21 @@ public class UserBusinessController {
     private UserDao userDao;
     private VideoDao videoDao;
     private ChanelDao chanelDao;
+    private EmitterProcessor<String> newUser;
+
 
     @Autowired
     public UserBusinessController(UserDao userDao, VideoDao videoDao, ChanelDao chanelDao) {
         this.userDao = userDao;
         this.videoDao = videoDao;
         this.chanelDao = chanelDao;
+        this.newUser = EmitterProcessor.create();
     }
 
     public UserBasicDto create(UserCreationDto userCreationDto) {
         User user = new User(userCreationDto.getName(), userCreationDto.getPassword(), userCreationDto.getCountry(), userCreationDto.getAddress());
         this.userDao.save(user);
+        this.newUser.onNext("New user added");
         return new UserBasicDto(user);
     }
 
@@ -98,5 +104,9 @@ public class UserBusinessController {
                 throw new BadRequestException("UserPatchDto is invalid");
         }
         this.userDao.save(user);
+    }
+
+    public Flux<String> publisher() {
+        return this.newUser;
     }
 }
