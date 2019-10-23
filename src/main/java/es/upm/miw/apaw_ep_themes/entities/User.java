@@ -27,21 +27,24 @@ public class User {
         this.address = address;
     }
 
+
+
+    public String getName(){
+        return this.name;
+    }
+
     public String getId(){
         return this.id;
     }
 
-    public String getName(){
-        return this.name;
+    public String getCountry(){
+        return this.country;
     }
 
     public String getPassword(){
         return this.password;
     }
 
-    public String getCountry(){
-        return this.country;
-    }
 
     public void setCountry(String country) {
         this.country = country;

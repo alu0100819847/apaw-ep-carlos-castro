@@ -27,24 +27,24 @@ public class Chanel {
         this.videos = new ArrayList<>();
     }
 
-    public String getId(){
-        return id;
-    }
-
     public String getName(){
         return this.name;
     }
 
-    public String getDescription(){
-        return this.description;
+    public String getId(){
+        return id;
+    }
+
+    public List<Video> getVideos(){
+        return this.videos;
     }
 
     public String getTopic(){
         return this.topic;
     }
 
-    public List<Video> getVideos(){
-        return this.videos;
+    public String getDescription(){
+        return this.description;
     }
 
     @Override

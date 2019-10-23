@@ -17,13 +17,13 @@ public class ContactComposite implements ContactTree {
     }
 
     @Override
-    public String getEmail() {
-        return this.email;
+    public int getTelephone(){
+        return this.telephone;
     }
 
     @Override
-    public int getTelephone(){
-        return this.telephone;
+    public String getEmail() {
+        return this.email;
     }
 
     @Override
