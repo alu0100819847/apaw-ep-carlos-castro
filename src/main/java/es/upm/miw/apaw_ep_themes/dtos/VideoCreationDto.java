@@ -20,9 +20,6 @@ public class VideoCreationDto {
             this.publicVideo = false;
         }
     }
-    public String getReference(){
-        return this.reference;
-    }
 
     public String getName(){
         return this.name;

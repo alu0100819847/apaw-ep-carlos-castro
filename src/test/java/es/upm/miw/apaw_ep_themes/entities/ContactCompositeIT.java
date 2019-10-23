@@ -45,5 +45,7 @@ public class ContactCompositeIT {
     void getTest(){
         assertEquals("c@hotm.es", library1.getEmail());
         assertEquals(2134132131, library1.getTelephone());
+        assertEquals("d@hotm.es", library2.getEmail());
+        assertEquals(2134132131, library2.getTelephone());
     }
 }
