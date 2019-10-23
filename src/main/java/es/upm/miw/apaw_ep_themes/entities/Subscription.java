@@ -40,4 +40,7 @@ public class Subscription {
         return this.chanel;
     }
 
+    public float getDonation() {
+        return donation;
+    }
 }

@@ -18,6 +18,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ApiTestConfig
@@ -45,7 +46,10 @@ public class SubscriptionResourceIT {
                         .expectStatus().isOk()
                         .expectBodyList(SubscriptionDto.class)
                         .returnResult().getResponseBody();
+        String chanelId = this.userDao.findById(userId).orElseThrow(() -> new NotFoundException("User id: " + userId)).getChanel().getId();
         assertTrue(list.size() > 0);
+        assertEquals(userId,  list.get(0).getUserId());
+        assertEquals(0,  list.get(0).getDonation());
     }
 
     @Test

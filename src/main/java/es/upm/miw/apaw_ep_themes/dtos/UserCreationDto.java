@@ -13,8 +13,6 @@ public class UserCreationDto {
 
     private String address;
 
-    private String chanelId;
-
     public UserCreationDto(){}
 
     public UserCreationDto(String name, String password, String country, String address){
