@@ -24,24 +24,25 @@ public class UserBasicDto {
         this.address = user.getAddress();
     }
 
-    public String getId(){
-        return this.id;
-    }
 
-    public String getName(){
-        return this.name;
-    }
-
-    public String getPassword(){
-        return this.password;
+    public String getAddress(){
+        return this.address;
     }
 
     public String getCountry(){
         return this.country;
     }
 
-    public String getAddress(){
-        return this.address;
+    public String getPassword(){
+        return this.password;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     @Override

@@ -20,20 +20,20 @@ public class Video {
         this.reaction = 0;
     }
 
-    public String getReference(){
-        return this.reference;
-    }
-
     public String getName(){
         return this.name;
     }
 
-    public Boolean getPublicVideo(){
-        return this.publicVideo;
+    public String getReference(){
+        return this.reference;
     }
 
     public int getReaction(){
-        return this.getReaction();
+        return this.reaction;
+    }
+
+    public Boolean getPublicVideo(){
+        return this.publicVideo;
     }
 
     @Override

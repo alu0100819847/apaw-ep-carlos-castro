@@ -43,4 +43,8 @@ public class Subscription {
     public float getDonation() {
         return donation;
     }
+
+    public LocalDateTime getCreationDate() {
+        return this.creationDate;
+    }
 }
