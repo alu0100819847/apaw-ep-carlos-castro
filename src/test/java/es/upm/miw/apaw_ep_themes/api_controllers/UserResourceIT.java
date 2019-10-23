@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_ep_themes.api_controllers;
 
 import es.upm.miw.apaw_ep_themes.ApiTestConfig;
+import es.upm.miw.apaw_ep_themes.business_controllers.UserBusinessController;
 import es.upm.miw.apaw_ep_themes.daos.UserDao;
 import es.upm.miw.apaw_ep_themes.dtos.*;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import reactor.test.StepVerifier;
 
 import java.util.List;
 
@@ -23,6 +25,8 @@ class UserResourceIT {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    UserBusinessController userBusinessController;
 
     @Test
     void testCreate() {
@@ -190,5 +194,16 @@ class UserResourceIT {
                 .body(BodyInserters.fromObject(new UserPatchDto("", "Irlanda")))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void testCreateUserPublisher() {
+        UserCreationDto userCreationDto = new UserCreationDto("Carlos", "ccarlos", "Madrid", "Calle universidad");
+        StepVerifier
+                .create(userBusinessController.publisher())
+                .then(() -> userBusinessController.create(userCreationDto))
+                .expectNext("New user added")
+                .thenCancel()
+                .verify();
     }
 }
