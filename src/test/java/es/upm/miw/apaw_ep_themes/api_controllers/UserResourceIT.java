@@ -79,13 +79,33 @@ class UserResourceIT {
                 .body(BodyInserters.fromObject(videoCreationDto))
                 .exchange()
                 .expectStatus().isOk();
+    }
 
+    @Test
+    void testCreateVideoWithoutPublicVideo() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        VideoCreationDto videoCreationDto = new VideoCreationDto("Presentacion Carlos", null);
+        VideoBasicDto videoBasicDto = this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(VideoBasicDto.class)
+                .returnResult().getResponseBody();
+        assertEquals(false, videoBasicDto.getPublicVideo());
     }
 
     @Test
     void testCreateVideoException() {
         String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
         VideoCreationDto videoCreationDto = new VideoCreationDto(null, true);
+        this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+
+        videoCreationDto = new VideoCreationDto("", true);
         this.webTestClient
                 .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
                 .body(BodyInserters.fromObject(videoCreationDto))
@@ -159,6 +179,33 @@ class UserResourceIT {
     }
 
     @Test
+    void testPutVideoBadRequestException() {
+        String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
+        VideoCreationDto videoCreationDto = new VideoCreationDto("Presentacion Carlos", true);
+        String videoReference = this.webTestClient
+                .post().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS, userId)
+                .body(BodyInserters.fromObject(videoCreationDto))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(VideoBasicDto.class)
+                .returnResult().getResponseBody().getReference();
+
+        VideoBasicDto videoBasicDto = new VideoBasicDto(null, false);
+        this.webTestClient
+                .put().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS + UserResource.REFERENCE, userId, videoReference)
+                .body(BodyInserters.fromObject(videoBasicDto))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+
+        videoBasicDto = new VideoBasicDto("", false);
+        this.webTestClient
+                .put().uri(UserResource.USERS + UserResource.ID_ID + UserResource.CHANEL + UserResource.VIDEOS + UserResource.REFERENCE, userId, videoReference)
+                .body(BodyInserters.fromObject(videoBasicDto))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
     void testDeleteVideo() {
         String userId = createUser("Carlos", "ccarlos", "Madrid", "Calle universidad").getId();
         VideoCreationDto videoCreationDto = new VideoCreationDto("Presentacion Carlos", true);
@@ -184,6 +231,11 @@ class UserResourceIT {
                 .body(BodyInserters.fromObject(new UserPatchDto("country", "Irlanda")))
                 .exchange()
                 .expectStatus().isOk();
+        this.webTestClient
+                .patch().uri(UserResource.USERS + UserResource.ID_ID, userId)
+                .body(BodyInserters.fromObject(new UserPatchDto("address", "Calle juan muñoz")))
+                .exchange()
+                .expectStatus().isOk();
     }
 
     @Test
@@ -192,6 +244,12 @@ class UserResourceIT {
         this.webTestClient
                 .patch().uri(UserResource.USERS + UserResource.ID_ID, userId)
                 .body(BodyInserters.fromObject(new UserPatchDto("", "Irlanda")))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+
+        this.webTestClient
+                .patch().uri(UserResource.USERS + UserResource.ID_ID, userId)
+                .body(BodyInserters.fromObject(new UserPatchDto("mal", "Irlanda")))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
     }
