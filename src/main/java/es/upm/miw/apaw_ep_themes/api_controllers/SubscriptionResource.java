@@ -3,7 +3,6 @@ package es.upm.miw.apaw_ep_themes.api_controllers;
 import es.upm.miw.apaw_ep_themes.business_controllers.SubscriptionBusinessController;
 import es.upm.miw.apaw_ep_themes.dtos.SubscriptionDto;
 import es.upm.miw.apaw_ep_themes.exceptions.BadRequestException;
-import org.reactivestreams.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

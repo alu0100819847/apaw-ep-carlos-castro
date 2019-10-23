@@ -20,14 +20,25 @@ public class SubscriptionDto {
         this.chanelId = subscription.getChanel().getId();
     }
 
+
+    public String getChanelId() {
+        return this.chanelId;
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
     public float getDonation(){
         return this.donation;
     }
 
     @Override
     public String toString() {
-        return "ChanelBasicDto{" +
+        return "SubscriptionDto{" +
                 "id='" + this.id + '\'' +
+                "chanel='" + this.chanelId + '\'' +
+                "user='" + this.userId + '\'' +
                 ", donation='" + this.donation + '\'' +
                 '}';
     }

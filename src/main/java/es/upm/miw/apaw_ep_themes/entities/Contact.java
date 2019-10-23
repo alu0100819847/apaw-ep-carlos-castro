@@ -47,12 +47,12 @@ public class Contact implements ContactTree{
 
     @Override
     public void add(ContactTree contactTree) {
-
+        //Not a composite
     }
 
     @Override
     public void remove(ContactTree contactTree) {
-
+        //Not a composite
     }
 
     @Override
